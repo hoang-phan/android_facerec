@@ -12,6 +12,6 @@ import vn.hoangphan.facerecognition.models.SuccessResponse;
  */
 public interface FaceRecAPI {
     @Multipart
-    @POST("/train")
-    void train(@Part("name") String name, @Part("data") TypedByteArray data, Callback<SuccessResponse> callback);
+    @POST("/images")
+    void createImage(@Part("image[binary_data]") TypedByteArray data, Callback<SuccessResponse> callback);
 }
