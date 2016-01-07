@@ -95,6 +95,9 @@ public class CameraActivity extends Activity implements PictureCallback, Surface
             @Override
             public void success(SuccessResponse successResponse, Response response) {
                 Log.d("TAG", "success");
+                if (mCamera != null) {
+                    mCamera.startPreview();
+                }
             }
 
             @Override
