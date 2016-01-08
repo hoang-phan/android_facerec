@@ -11,7 +11,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,7 +29,6 @@ public class CameraActivity extends Activity implements PictureCallback, Surface
     private Camera mCamera;
     private ImageView mCameraImage;
     private SurfaceView mCameraPreview;
-    private Button mCaptureImageButton;
     private SurfaceHolder mSurfaceHolder;
 
     private OnClickListener mCaptureImageButtonClickListener = new OnClickListener() {
@@ -53,9 +51,7 @@ public class CameraActivity extends Activity implements PictureCallback, Surface
         mSurfaceHolder = mCameraPreview.getHolder();
         mSurfaceHolder.addCallback(this);
         mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-
-        mCaptureImageButton = (Button) findViewById(R.id.capture_image_button);
-        mCaptureImageButton.setOnClickListener(mCaptureImageButtonClickListener);
+        mCameraPreview.setOnClickListener(mCaptureImageButtonClickListener);
     }
 
     @Override
@@ -88,7 +84,7 @@ public class CameraActivity extends Activity implements PictureCallback, Surface
     public void onPictureTaken(byte[] data, Camera camera) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Bitmap origin = BitmapFactory.decodeByteArray(data, 0, data.length);
-        Bitmap bitmap = Bitmap.createScaledBitmap(origin, origin.getWidth() / 3, origin.getHeight() / 3, false);
+        Bitmap bitmap = Bitmap.createScaledBitmap(origin, 200, 150, false);
         bitmap.compress(Bitmap.CompressFormat.JPEG, 95, outputStream);
         TypedByteArray typedByteArray = new TypedByteArray("image/*", outputStream.toByteArray());
         APIService.getInstance().createImage(typedByteArray, new Callback<SuccessResponse>() {
